@@ -37,8 +37,8 @@ function agregarCurso(e) {
      // Delegation para agregar-carrito
      if (e.target.classList.contains('agregar-carrito')) {
           const curso = e.target.parentElement.parentElement;
+          pintarBordeVerdeMismoAutor(curso)
           pintaBorde(curso)
-          // pintarBordeVerdeMismoAutor(curso)
           // Enviamos el curso seleccionado para tomar sus datos
           leerDatosCurso(curso);
      }
@@ -90,11 +90,12 @@ function eliminarCurso(e) {
           // e.target.parentElement.parentElement.remove();
           const curso = e.target.parentElement.parentElement;
           const cursoId = curso.querySelector('a').getAttribute('data-id');
-          
-          despintarBordeSeleccionado(curso, cursoId)
+
+          despintarBordeSeleccionado(articulosCarrito, cursoId)
 
           // Eliminar del arreglo del carrito
           articulosCarrito = articulosCarrito.filter(curso => curso.id !== cursoId);
+
           carritoHTML();
      }
      console.log(articulosCarrito);
@@ -142,37 +143,39 @@ function vaciarCarrito() {
      }
 }
 
-function despintarBordeSeleccionado(curso, cursoId){
+//#region NOPE
 
-     console.log(cursoId);
-     console.log(curso => curso.id);
+function despintarBordeSeleccionado(articulosCarrito, cursoId) {
+
+     articulosCarrito.forEach(curso => {
+          console.log(curso);
+          Array.prototype.forEach.call(tarjetasCursos, function (_tarjetaCurso) {
+               if (curso.id === cursoId) {
+                    _tarjetaCurso.classList.remove("borderBlue")
+               }
+          });
+     })
+
 }
 
-function despintarTodosBorde(){
+function despintarTodosBorde() {
 
      Array.prototype.forEach.call(tarjetasCursos, function (_tarjetaCurso) {
-               _tarjetaCurso.style.borderStyle = ""
-               _tarjetaCurso.style.borderWidth = ""
-               _tarjetaCurso.style.borderColor = ""
+          _tarjetaCurso.classList.remove("borderBlue")
      });
 }
 
 function pintaBorde(curso) {
 
-     curso.style.borderStyle = "solid"
-     curso.style.borderWidth = "5px"
-     curso.style.borderColor = "blue"
+     curso.classList.add("borderBlue")
      curso.setAttribute("tipo", "seleccionado")
 }
 
-// function pintarBordeVerdeMismoAutor(curso) {
-//      leerDatosCurso(curso)
-//      let cursoPropietario = curso.querySelector(".info-card p")
-//      Array.prototype.forEach.call(tarjetasCursos, function (_tarjetaCurso) {
-//           if (infoCurso.propietario === cursoPropietario) {
-//                curso.style.borderStyle = "solid"
-//                curso.style.borderWidth = "5px"
-//                curso.style.borderColor = "green"
-//           }
-//      });
-// }
+function pintarBordeVerdeMismoAutor(curso) {
+     let cursoPropietario = curso.querySelector(".info-card p").textContent
+     Array.prototype.forEach.call(tarjetasCursos, function (_tarjetaCurso) {
+          if (_tarjetaCurso.querySelector(".info-card > p").textContent === cursoPropietario) {
+               _tarjetaCurso.classList.add("borderGreen")
+          }
+     });
+}
