@@ -193,3 +193,25 @@ text-decoration: none;
     border-width: 2px;
     border-color: green;
 }
+
+
+p.rebajado  {
+
+    text-align: center;
+    background-color: red;
+    color: white;
+}
+
+span.crossed {
+    text-decoration: line-through;
+}
+
+.nuevoPrecio {
+
+    font-size: larger;
+    text-align: center;
+    background-color: lime;
+    font-weight: bold;
+    margin-bottom: 5px;
+
+}
